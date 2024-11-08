@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const Recipe = require('../models/Recipe');
 
-// Add a new recipe
 router.post('/add', async (req, res) => {
   try {
     const { title, ingredients, steps, image, category, author } = req.body;
@@ -14,7 +13,6 @@ router.post('/add', async (req, res) => {
   }
 });
 
-// Get all recipes
 router.get('/', async (req, res) => {
   try {
     const recipes = await Recipe.find().populate('author', 'username');
