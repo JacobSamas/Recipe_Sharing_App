@@ -18,19 +18,21 @@ export default function LoginPage() {
         },
         body: JSON.stringify({ username, password }),
       });
-
+  
       if (!res.ok) {
         throw new Error('Invalid username or password');
       }
-
+  
       const data = await res.json();
       localStorage.setItem('token', data.token);
+      localStorage.setItem('userId', data.userId); // Store userId for authoring recipes
       setError(null);
       router.push('/');
     } catch (err) {
       setError(err.message);
     }
   };
+  
 
   return (
     <div className="container mx-auto py-8">

@@ -6,3 +6,10 @@ export function isAuthenticated() {
     return false;
   }
   
+  export function getUserId() {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('userId');
+    }
+    return null;
+  }
+  

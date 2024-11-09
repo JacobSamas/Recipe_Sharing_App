@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { isAuthenticated } from '../../utils/auth';
+import { isAuthenticated, getUserId } from '../utils/auth';
 
 export default function AddRecipePage() {
   const [title, setTitle] = useState('');
@@ -22,6 +22,11 @@ export default function AddRecipePage() {
     e.preventDefault();
     try {
       const token = localStorage.getItem('token');
+      const author = getUserId(); // Get the user ID from localStorage
+
+      if (!author) {
+        throw new Error('Author ID is missing. Please ensure you are logged in.');
+      }
 
       const res = await fetch('http://localhost:5001/api/recipes/add', {
         method: 'POST',
@@ -34,6 +39,7 @@ export default function AddRecipePage() {
           ingredients: ingredients.split(',').map((item) => item.trim()),
           steps,
           category,
+          author, // Include the author ID
         }),
       });
 
